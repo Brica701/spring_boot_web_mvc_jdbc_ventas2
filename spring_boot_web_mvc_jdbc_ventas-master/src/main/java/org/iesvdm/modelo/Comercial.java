@@ -34,4 +34,7 @@ public class Comercial {
 	private BigDecimal comision;
 
 	private List<Pedido> pedidos;
+
+	public Comercial(int id, String nombre, String apellido1, String apellido2, float comision, Object pedidos) {
+	}
 }

@@ -6,12 +6,15 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 //La anotación @Data de lombok proporcionará el código de:
 //getters/setters, toString, equals y hashCode
 //propio de los objetos POJOS o tipo Beans
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+
 public class Cliente {
 
 	private long id;
