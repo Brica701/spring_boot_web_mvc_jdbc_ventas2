@@ -19,7 +19,7 @@ public class ComercialDAOImpl implements ComercialDAO {
 
 	@Override
 	public void create(Comercial comercial) {
-		String sql = "INSERT INTO comercial (nombre, apellido1, apellido2, comisión) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO comercial (nombre, apellido1, apellido2, comision) VALUES (?, ?, ?, ?)";
 		int rows = jdbcTemplate.update(sql, comercial.getNombre(), comercial.getApellido1(), comercial.getApellido2(), comercial.getComision());
 		log.info("Insertado Comercial: {} | Filas afectadas: {}", comercial, rows);
 	}
@@ -28,11 +28,14 @@ public class ComercialDAOImpl implements ComercialDAO {
 	public List<Comercial> getAll() {
 		List<Comercial> listComercial = jdbcTemplate.query(
 				"SELECT * FROM comercial",
-				(rs, rowNum) -> new Comercial(rs.getInt("id"),
+				(rs, rowNum) -> new Comercial(
+						rs.getInt("id"),
 						rs.getString("nombre"),
 						rs.getString("apellido1"),
 						rs.getString("apellido2"),
-						rs.getFloat("comisión"))
+						rs.getFloat("comision"),
+						null // Se deja en null la lista de pedidos por ahora
+				)
 		);
 		log.info("Devueltos {} registros.", listComercial.size());
 		return listComercial;
@@ -41,25 +44,34 @@ public class ComercialDAOImpl implements ComercialDAO {
 	@Override
 	public Optional<Comercial> find(int id) {
 		String sql = "SELECT * FROM comercial WHERE id = ?";
-		return jdbcTemplate.query(sql, (rs, rowNum) -> new Comercial(
+		return jdbcTemplate.query(
+				sql,
+				new Object[]{id},  // Se pasa el ID correctamente
+				(rs, rowNum) -> new Comercial(
 						rs.getInt("id"),
 						rs.getString("nombre"),
 						rs.getString("apellido1"),
 						rs.getString("apellido2"),
-						rs.getFloat("comisión")), id)
-				.stream()
-				.findFirst();
+						rs.getFloat("comision"),
+						null // Se deja en null la lista de pedidos por ahora
+				)
+		).stream().findFirst();
 	}
 
 	@Override
 	public void update(Comercial comercial) {
-		String sql = "UPDATE comercial SET nombre = ?, apellido1 = ?, apellido2 = ?, comisión = ? WHERE id = ?";
+		String sql = "UPDATE comercial SET nombre = ?, apellido1 = ?, apellido2 = ?, comision = ? WHERE id = ?";
 		int rows = jdbcTemplate.update(sql, comercial.getNombre(), comercial.getApellido1(), comercial.getApellido2(), comercial.getComision(), comercial.getId());
 		log.info("Actualizado Comercial: {} | Filas afectadas: {}", comercial, rows);
 	}
 
 	@Override
 	public void delete(long id) {
+
+	}
+
+	@Override
+	public void delete(int id) {  // Cambiado a int para coincidir con la BD
 		String sql = "DELETE FROM comercial WHERE id = ?";
 		int rows = jdbcTemplate.update(sql, id);
 		log.info("Eliminado Comercial con ID {} | Filas afectadas: {}", id, rows);
