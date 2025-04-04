@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Detalles Comercial</title>
+    <title th:text="#{msg.commercialDetails}">Detalles Comercial</title>
     <style>
         .clearfix::after {
             content: "";
@@ -17,12 +17,12 @@
     <!-- Cabecera -->
     <div class="clearfix">
         <div style="float: left; width: 50%">
-            <h1>Detalle Comercial</h1>
+            <h1 th:text="#{msg.commercialDetails}">Detalle Comercial</h1>
         </div>
         <div style="float: none; width: auto; overflow: hidden; min-height: 80px; position: relative;">
             <div style="position: absolute; left: 39%; top : 39%;">
                 <form action="/comercial/editar/{id}">
-                    <input type="submit" value="Editar Comercial">
+                    <input type="submit" th:value="#{msg.editCommercial}" />
                 </form>
             </div>
         </div>
@@ -35,11 +35,11 @@
 
     <!-- Información Comercial -->
     <div class="clearfix">
-        <div style="float: left; width: 14%">Id</div>
-        <div style="float: left; width: 14%">Nombre</div>
-        <div style="float: left; width: 14%">Apellido 1</div>
-        <div style="float: left; width: 14%">Apellido 2</div>
-        <div style="float: left; width: 14%">Comisión</div>
+        <div style="float: left; width: 14%" th:text="#{msg.id}">Id</div>
+        <div style="float: left; width: 14%" th:text="#{msg.name}">Nombre</div>
+        <div style="float: left; width: 14%" th:text="#{msg.surname1}">Apellido 1</div>
+        <div style="float: left; width: 14%" th:text="#{msg.surname2}">Apellido 2</div>
+        <div style="float: left; width: 14%" th:text="#{msg.commission}">Comisión</div>
     </div>
     <div class="clearfix">
         <hr/>
@@ -60,12 +60,12 @@
 
     <!-- Pedidos del Comercial -->
     <div class="clearfix">
-        <h2>Pedidos del Comercial</h2>
+        <h2 th:text="#{msg.customerOrderCommercial}">Pedidos del Comercial</h2>
         <div class="clearfix">
-            <div style="float: left; width: 14%">Id Pedido</div>
-            <div style="float: left; width: 14%">Total</div>
-            <div style="float: left; width: 14%">Fecha</div>
-            <div style="float: left; width: 14%">Cliente</div>
+            <div style="float: left; width: 14%" th:text="#{msg.idOrders}">Id Pedido</div>
+            <div style="float: left; width: 14%" th:text="#{msg.total}">Total</div>
+            <div style="float: left; width: 14%" th:text="#{msg.date}">Fecha</div>
+            <div style="float: left; width: 14%" th:text="#{msg.client}">Cliente</div>
         </div>
         <div class="clearfix">
             <hr/>
