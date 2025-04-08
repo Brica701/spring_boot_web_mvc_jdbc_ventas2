@@ -9,12 +9,17 @@
             display: block;
             clear: both;
         }
+        .pedido-max {
+            background-color: #c6f6d5;
+        }
+        .pedido-min {
+            background-color: #fefcbf;
+        }
     </style>
 </head>
 <body>
 <div id="contenedora" style="float:none; margin: 0 auto; width: 95%;">
 
-    <!-- Cabecera -->
     <div class="clearfix">
         <div style="float: left; width: 50%">
             <h1 th:text="#{msg.commercialDetails}">Detalle Comercial</h1>
@@ -28,12 +33,10 @@
         </div>
     </div>
 
-    <!-- Línea de separación -->
     <div class="clearfix">
         <hr/>
     </div>
 
-    <!-- Información Comercial -->
     <div class="clearfix">
         <div style="float: left; width: 14%" th:text="#{msg.id}">Id</div>
         <div style="float: left; width: 14%" th:text="#{msg.name}">Nombre</div>
@@ -45,7 +48,6 @@
         <hr/>
     </div>
 
-    <!-- Detalles del Comercial -->
     <div class="clearfix" style="margin-top: 6px;">
         <div style="float: left; width: 14%" th:text="${comercial.id}">ID Comercial</div>
         <div style="float: left; width: 14%" th:text="${comercial.nombre}">Nombre Comercial</div>
@@ -58,7 +60,18 @@
         <hr/>
     </div>
 
-    <!-- Pedidos del Comercial -->
+    <div class="clearfix">
+        <h2>Estadísticas de Pedidos</h2>
+        <div>Total de pedidos: <span th:text="${estadisticas.totalPedidos}">0</span></div>
+        <div>Media de pedidos: <span th:text="${estadisticas.mediaPedidos}">0.0</span></div>
+        <div>Pedido máximo: <span th:text="${estadisticas.pedidoMaximo}">0.0</span></div>
+        <div>Pedido mínimo: <span th:text="${estadisticas.pedidoMinimo}">0.0</span></div>
+    </div>
+
+    <div class="clearfix">
+        <hr/>
+    </div>
+
     <div class="clearfix">
         <h2 th:text="#{msg.customerOrderCommercial}">Pedidos del Comercial</h2>
         <div class="clearfix">
@@ -71,15 +84,48 @@
             <hr/>
         </div>
 
-        <!-- Listar los pedidos del Comercial -->
-        <div th:each="pedido : ${comercial.pedidos}" class="clearfix" style="margin-top: 6px;">
+        <div th:each="pedido : ${pedidos}" class="clearfix"
+             th:classappend="${pedido.id} == ${pedidoMax.id} ? 'pedido-max' : (${pedido.id} == ${pedidoMin.id} ? 'pedido-min' : '')"
+             style="margin-top: 6px;">
             <div style="float: left; width: 14%" th:text="${pedido.id}">ID Pedido</div>
             <div style="float: left; width: 14%" th:text="${pedido.total}">Total</div>
             <div style="float: left; width: 14%" th:text="${pedido.fecha}">Fecha</div>
             <div style="float: left; width: 14%">
-                <!-- Enlace a los detalles del cliente del pedido -->
                 <a th:href="@{/clientes/detalle/{id}(id=${pedido.id_cliente})}" th:text="${pedido.id_cliente}">Ver Detalles Cliente</a>
             </div>
+        </div>
+
+        <div class="clearfix" style="margin-top: 10px;">
+            <strong>Leyenda:</strong>
+            <span style="background-color:#c6f6d5; padding: 2px 6px; margin-right: 10px;">Pedido Máximo</span>
+            <span style="background-color:#fefcbf; padding: 2px 6px;">Pedido Mínimo</span>
+        </div>
+    </div>
+
+    <div class="clearfix">
+        <hr/>
+    </div>
+
+    <div class="clearfix">
+        <h2>Clientes ordenados por cuantía total de pedidos</h2>
+        <div class="clearfix">
+            <div style="float: left; width: 14%" th:text="#{msg.id}">ID</div>
+            <div style="float: left; width: 20%" th:text="#{msg.name}">Nombre</div>
+            <div style="float: left; width: 20%" th:text="#{msg.surname1} + ' ' + #{msg.surname2}">Apellidos</div>
+            <div style="float: left; width: 14%" th:text="#{msg.city}">Ciudad</div>
+            <div style="float: left; width: 14%" th:text="#{msg.category}">Categoría</div>
+            <div style="float: left; width: 14%" th:text="#{msg.total}">Cuantía Total</div>
+        </div>
+        <div class="clearfix">
+            <hr/>
+        </div>
+        <div th:each="cliente : ${clientesOrdenados}" class="clearfix" style="margin-top: 6px;">
+            <div style="float: left; width: 14%" th:text="${cliente.id}">ID</div>
+            <div style="float: left; width: 20%" th:text="${cliente.nombre}">Nombre</div>
+            <div style="float: left; width: 20%" th:text="${cliente.apellido1 + ' ' + cliente.apellido2}">Apellidos</div>
+            <div style="float: left; width: 14%" th:text="${cliente.ciudad}">Ciudad</div>
+            <div style="float: left; width: 14%" th:text="${cliente.categoria}">Categoría</div>
+            <div style="float: left; width: 14%" th:text="${cliente.cuantia}">Cuantía</div>
         </div>
     </div>
 

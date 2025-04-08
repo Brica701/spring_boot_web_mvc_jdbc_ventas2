@@ -1,6 +1,9 @@
 package org.iesvdm.controlador;
 
+import org.iesvdm.dto.ClienteDTO;
+import org.iesvdm.dto.ComercialDTO;
 import org.iesvdm.modelo.Comercial;
+import org.iesvdm.modelo.Pedido;
 import org.iesvdm.service.ComercialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,7 +43,7 @@ public class ComercialController {
 
     @GetMapping("/comercial/editar/{id}")
     public String editar(Model model, @PathVariable Integer id) {
-        Comercial comercial = comercialService.one(id); // CORREGIDO
+        Comercial comercial = comercialService.one(id);
         model.addAttribute("comercial", comercial);
         return "/comercial/editar-comercial";
     }
@@ -59,9 +62,28 @@ public class ComercialController {
 
     @GetMapping("/comercial/detalles/{id}")
     public String infoComercial(Model model, @PathVariable int id) {
-        Comercial comercial = comercialService.one(id); // CORREGIDO
+        Comercial comercial = comercialService.one(id);
         model.addAttribute("comercial", comercial);
 
+        List<Pedido> pedidos = comercialService.getPedidosByComercial(id);
+        model.addAttribute("pedidos", pedidos);
+
+        ComercialDTO estadisticas = comercialService.obtenerEstadisticasPedidos(id);
+        model.addAttribute("estadisticas", estadisticas);
+
+        Pedido pedidoMax = pedidos.stream()
+                .max((p1, p2) -> Double.compare(p1.getTotal(), p2.getTotal()))
+                .orElse(null);
+
+        Pedido pedidoMin = pedidos.stream()
+                .min((p1, p2) -> Double.compare(p1.getTotal(), p2.getTotal()))
+                .orElse(null);
+
+        model.addAttribute("pedidoMax", pedidoMax);
+        model.addAttribute("pedidoMin", pedidoMin);
+
+        List<ClienteDTO> clientesOrdenados = comercialService.getClientesOrdenadosPorCuantia();
+        model.addAttribute("clientesOrdenados", clientesOrdenados);
 
         return "/comercial/detalle-comercial";
     }
