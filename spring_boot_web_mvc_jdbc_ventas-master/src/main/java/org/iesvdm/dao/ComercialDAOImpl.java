@@ -66,14 +66,9 @@ public class ComercialDAOImpl implements ComercialDAO {
 	}
 
 	@Override
-	public void delete(long id) {
-
-	}
-
-	@Override
-	public void delete(int id) {  // Cambiado a int para coincidir con la BD
+	public void delete(int id) {  // Cambié de 'long' a 'int'
 		String sql = "DELETE FROM comercial WHERE id = ?";
 		int rows = jdbcTemplate.update(sql, id);
-		log.info("Eliminado Comercial con ID {} | Filas afectadas: {}", id, rows);
+		log.info("Comercial con id {} eliminado. Filas afectadas: {}", id, rows);
 	}
 }

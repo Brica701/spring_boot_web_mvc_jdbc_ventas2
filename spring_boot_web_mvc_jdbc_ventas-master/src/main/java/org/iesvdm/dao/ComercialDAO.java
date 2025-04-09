@@ -15,7 +15,6 @@ public interface ComercialDAO {
 
 	void update(Comercial comercial);
 
-	void delete(long id);
+	void delete(int id);
 
-    void delete(int id);
 }

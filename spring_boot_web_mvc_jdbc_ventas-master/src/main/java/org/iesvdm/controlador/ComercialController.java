@@ -26,13 +26,13 @@ public class ComercialController {
     public String listar(Model model) {
         List<Comercial> listaComercial = comercialService.listAll();
         model.addAttribute("listaComercial", listaComercial);
-        return "/comercial/comerciales";
+        return "comercial";  // Corregido: sin la carpeta 'comercial'
     }
 
     @GetMapping("/comercial/crear")
     public String crear(Model model) {
         model.addAttribute("comercial", new Comercial());
-        return "/comercial/crear-comercial";
+        return "crear-comercial";  // Corregido: sin la carpeta 'comercial'
     }
 
     @PostMapping("/comercial/crear")
@@ -45,7 +45,7 @@ public class ComercialController {
     public String editar(Model model, @PathVariable Integer id) {
         Comercial comercial = comercialService.one(id);
         model.addAttribute("comercial", comercial);
-        return "/comercial/editar-comercial";
+        return "editar-comercial";  // Corregido: sin la carpeta 'comercial'
     }
 
     @PostMapping("/comercial/editar/{id}")
@@ -85,6 +85,6 @@ public class ComercialController {
         List<ClienteDTO> clientesOrdenados = comercialService.getClientesOrdenadosPorCuantia();
         model.addAttribute("clientesOrdenados", clientesOrdenados);
 
-        return "/comercial/detalle-comercial";
+        return "detalle-comercial";  // Corregido: sin la carpeta 'comercial'
     }
 }
