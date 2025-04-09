@@ -37,4 +37,5 @@ public class Comercial {
 
 	public Comercial(int id, String nombre, String apellido1, String apellido2, float comision, Object pedidos) {
 	}
+
 }

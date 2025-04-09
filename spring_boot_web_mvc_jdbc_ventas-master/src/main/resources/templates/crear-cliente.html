@@ -1,0 +1,47 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{msg.titleCreate}">Crear Cliente</title>
+</head>
+<body>
+<div id="contenedora" style="float:none; margin: 0 auto;width: 95%;" >
+    <h1 th:text="#{msg.titleCreate}">Crear Cliente</h1>
+
+    <form th:action="@{/clientes/crear}" th:object="${cliente}" method="post">
+        <div>
+            <label for="nombre" th:text="#{msg.name}">Nombre</label>
+            <input type="text" th:field="*{cliente.nombre}" id="nombre" />
+            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{cliente.nombre}"></div>
+        </div>
+
+        <div>
+            <label for="apellido1" th:text="#{msg.surname1}">Primer Apellido</label>
+            <input type="text" th:field="*{cliente.apellido1}" id="apellido1" />
+            <div th:if="${#fields.hasErrors('apellido1')}" th:errors="*{cliente.apellido1}"></div>
+        </div>
+
+        <div>
+            <label for="apellido2" th:text="#{msg.surname2}">Segundo Apellido</label>
+            <input type="text" th:field="*{cliente.apellido2}" id="apellido2" />
+            <div th:if="${#fields.hasErrors('apellido2')}" th:errors="*{cliente.apellido2}"></div>
+        </div>
+
+        <div>
+            <label for="ciudad" th:text="#{msg.city}">Ciudad</label>
+            <input type="text" th:field="*{cliente.ciudad}" id="ciudad" />
+            <div th:if="${#fields.hasErrors('ciudad')}" th:errors="*{cliente.ciudad}"></div>
+        </div>
+
+        <div>
+            <label for="categoria" th:text="#{msg.category}">Categoría</label>
+            <input type="number" th:field="*{cliente.categoria}" id="categoria" />
+            <div th:if="${#fields.hasErrors('categoria')}" th:errors="*{cliente.categoria}"></div>
+        </div>
+
+        <button type="submit" th:text="#{msg.save}">Guardar</button>
+        <a href="#" th:href="@{/clientes}">Volver</a>
+    </form>
+</div>
+</body>
+</html>

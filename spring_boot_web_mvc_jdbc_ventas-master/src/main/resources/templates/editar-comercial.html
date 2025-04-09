@@ -1,0 +1,41 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{msg.editCommercial}">Editar Comercial</title>
+</head>
+<body>
+<div id="contenedora" style="float:none; margin: 0 auto;width: 95%;" >
+    <h1 th:text="#{msg.editCommercial}">Editar Comercial</h1>
+
+    <form th:action="@{/comerciales/editar/{id}(id=${comercial.id})}" th:object="${comercial}" method="post">
+        <div>
+            <label for="nombre" th:text="#{msg.name}">Nombre</label>
+            <input type="text" th:field="*{comercial.nombre}" id="nombre" />
+            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{comercial.nombre}"></div>
+        </div>
+
+        <div>
+            <label for="apellido1" th:text="#{msg.surname1}">Primer Apellido</label>
+            <input type="text" th:field="*{comercial.apellido1}" id="apellido1" />
+            <div th:if="${#fields.hasErrors('apellido1')}" th:errors="*{comercial.apellido1}"></div>
+        </div>
+
+        <div>
+            <label for="apellido2" th:text="#{msg.surname2}">Segundo Apellido</label>
+            <input type="text" th:field="*{comercial.apellido2}" id="apellido2" />
+            <div th:if="${#fields.hasErrors('apellido2')}" th:errors="*{comercial.apellido2}"></div>
+        </div>
+
+        <div>
+            <label for="comision" th:text="#{msg.commission}">Comisión</label>
+            <input type="number" step="0.01" th:field="*{comercial.comision}" id="comision" />
+            <div th:if="${#fields.hasErrors('comision')}" th:errors="*{comercial.comision}"></div>
+        </div>
+
+        <button type="submit" th:text="#{msg.save}">Guardar</button>
+        <a href="#" th:href="@{/comerciales}">Volver</a>
+    </form>
+</div>
+</body>
+</html>
